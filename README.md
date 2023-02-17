@@ -1,5 +1,5 @@
 # Azure-Networking-Performance
-Networking Performance and Best Practices that goes a lot deeper then anything you will find on Azure public docs.
+Networking Performance and Best Practices that goes a little deeper on TCP/IP
 # Intro
 This article is going to discuss Azure networking performance across VPN and ExpressRoute. We will talk about what to expect, best practices, how to troubleshoot and tips. To summarize when talking about networking performance, you're only has fast as your lowest denominator. Taking Express Route as an example, you have the circuit bandwidth all up (Which includes both MSEEs ~VRFs), The gateway bandwidth, and the VMs from which you are running your workloads, sender and receiver. Any of those variables can be the bottleneck if peformance is not optimal. To summarize, the biggest factors that affect network performance are as follows:
 
@@ -58,8 +58,9 @@ https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-tcpip-pe
 
 # Packet Loss
 
-Generally in TCP/IP, any packet loss over 2% will start affecting performance. TCP is a connection oriented protocol, so it's designed to retransmit missing data. However, retransmissions take time, cause delays in large numbers. Once the path has loads of transmissions or duplicate ACKS, the peformance will take a hit. This is more of a problem on VPN as the path is over the internet as opposed to ExR, but both can happen. So as long as the packet loss is below that number, TCP should be able to handle this without major notice. You can check paket loss in Wireshark using tcp.analysis.retransmission or tcp.analysis.flags to check all bad TCP issues. 
+Generally in TCP/IP, any packet loss over 2% will start affecting performance. TCP is a connection oriented protocol, so it's designed to retransmit missing data. However, retransmissions take time, cause delays in large numbers. Once the path has loads of transmissions or duplicate ACKS, the peformance will take a hit. This is more of a problem on VPN as the path is over the internet as opposed to ExR, but both can happen. So as long as the packet loss is below that number, TCP should be able to handle this without major notice. You can check packet loss in Wireshark using tcp.analysis.retransmission or tcp.analysis.flags to check all bad TCP issues. 
 
+# Formulas and Links to Check Performance
 
 
 
