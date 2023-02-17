@@ -61,6 +61,36 @@ https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-tcpip-pe
 Generally in TCP/IP, any packet loss over 2% will start affecting performance. TCP is a connection oriented protocol, so it's designed to retransmit missing data. However, retransmissions take time, cause delays in large numbers. Once the path has loads of transmissions or duplicate ACKS, the peformance will take a hit. This is more of a problem on VPN as the path is over the internet as opposed to ExR, but both can happen. So as long as the packet loss is below that number, TCP should be able to handle this without major notice. You can check packet loss in Wireshark using tcp.analysis.retransmission or tcp.analysis.flags to check all bad TCP issues. 
 
 # Formulas and Links to Check Performance
+```bash
+# Calculate Maximum TCP throughput
+TCP-Window-Size-in-bits / Latency-in-seconds = Bits-per-second-throughput (bps)
+
+# Calculate optimal TCP Window Size
+Bandwidth-in-bits-per-second * Round-trip-latency-in-seconds = TCP window size in bits / 8 = TCP window size in bytes!
+
+# Calculate maximum latency for desired throughput
+TCP-window-size-bits / Desired-throughput-in-bits-per-second = Maximum RTT Latency!
+```
+
+Bandwidth Delay Product
+The Bandwidth Delay Product (BDP) is a simple formula used to calculate the maximum amount of data that can exist on the network (referred to as bits or bytes in flight) based on a link’s characteristics:
+• Bandwidth (bps) x RTT (seconds) = bits in flight
+• Divide the result by 8 for bytes in flight = BDP
+• So…….bps x RTT/8=BDP
+
+If the BDP (in bytes) for a given network link exceeds the value of a session’s TCP window, then the TCP session will not be able to use all of the available bandwidth; instead, throughput will be limited by the receive window (assuming no other constraints, of course).
+The BDP can also be used to calculate the maximum throughput (“bandwidth”) of a TCP connection given a fixed receive window size:
+• Bandwidth(Throughput) = (window size *8)/RTT
+Remember 1 mbps = 1,000,000 bps (bits per second)
+Remember 1 gbps = 1,000 mbps (bits per second)
+
+*If you want to use an automated third party site to check peformance, I recoommend wintelguy:*
+https://wintelguy.com/wanperf.pl
+
+# Summary
+From the above points, I wanted to touch on the various factors that affect network peformance in Azure. As we can see there are many factors that contribute to the peformance one would get over VPN and Expressroute. Some of them have knobs we can easily turn, ie updating the GW if its overloaded, updating the circuit bandwidth. The other knobs we cannot turn easily, changing the RTT or physical distance between sender and reciever, eliminating potential packet loss scenarios, Changing the path the pakets take, unless we have the ability to add or remove routers along the way. 
+
+
 
 
 
