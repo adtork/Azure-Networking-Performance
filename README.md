@@ -84,7 +84,7 @@ The BDP can also be used to calculate the maximum throughput (“bandwidth”) o
 Remember 1 mbps = 1,000,000 bps (bits per second)
 Remember 1 gbps = 1,000 mbps (bits per second)
 
-*If you want to use an automated third party site to check peformance, I recoommend wintelguy:*
+*If you want to use an automated third party site to check peformance, I recommend wintelguy:*
 https://wintelguy.com/wanperf.pl
 
 # Summary
