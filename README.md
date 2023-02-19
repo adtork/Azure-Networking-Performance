@@ -102,6 +102,19 @@ https://wintelguy.com/wanperf.pl
 <br>
 • If the application supports parallel threads and operations, use it as that will yeild much better peformance
 
+# Other Useful Links
+• https://learn.microsoft.com/en-us/azure/virtual-network/virtual-machine-network-throughput
+<br>
+• https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-tcpip-performance-tuning
+<br>
+• https://learn.microsoft.com/en-us/azure/expressroute/expressroute-about-virtual-network-gateways
+<br>
+• https://learn.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpngateways
+<br>
+• https://learn.microsoft.com/en-us/azure/expressroute/expressroute-circuit-peerings
+<br>
+• https://learn.microsoft.com/en-us/azure/expressroute/expressroute-erdirect-about
+
 
 # Summary
 From the above points, I wanted to touch on the various factors that affect network peformance in Azure. As we can see there are many factors that contribute to the peformance one would get over VPN and Expressroute. Some of them have knobs we can easily turn, ie updating the GW if its overloaded, updating the circuit bandwidth. The other knobs we cannot turn easily, changing the RTT or physical distance between sender and reciever, eliminating potential packet loss scenarios, Changing the path the pakets take unless we have the ability to add or remove routers along the way. You can also tune the applicatin if possible, or make sure you're following best practices in terms of enabling accelerated networking on the VM based on VM size. You also want to make sure your disks can handle the amount of IOs you pushing.
