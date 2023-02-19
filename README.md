@@ -87,6 +87,22 @@ Remember 1 gbps = 1,000 mbps (bits per second)
 *If you want to use an automated third party site to check peformance, I recommend wintelguy:*
 https://wintelguy.com/wanperf.pl
 
+# Tips
+• For ExpressRoute, always peer as closet to where your workloads will be running to reduce RTT
+<br>
+• For VPN and ExR Gateways, make sure you're monitoring bits in/out, PPS and CPU to make sure the gateway is correctly sized for your workloads. ExpressRoute scalable gateway is coming, but its not ready yet at the time of this article.
+<br>
+• For the circuit throughput, remember its both VRFs, so MSEE/MSEE2. You can always size up assuming there is sufficent capacity, but you CANNOT size down without a delete and re-create.
+<br>
+• Always run fastpath if you can for ExpressRoute gateways, as that eliminates the ingress path for the dataplane
+<br>
+• Make sure the VMs Disks are Ultra when possible and also make sure Accelerated Networking is enabled when possible to bypass the vSwitch
+<br>
+• Make sure both machines are using TCP Window Scaling, and receive side scaling is being used (RSS)
+<br>
+• If the application supports parallel threads and operations, use it as that will yeild much better peformance
+
+
 # Summary
 From the above points, I wanted to touch on the various factors that affect network peformance in Azure. As we can see there are many factors that contribute to the peformance one would get over VPN and Expressroute. Some of them have knobs we can easily turn, ie updating the GW if its overloaded, updating the circuit bandwidth. The other knobs we cannot turn easily, changing the RTT or physical distance between sender and reciever, eliminating potential packet loss scenarios, Changing the path the pakets take unless we have the ability to add or remove routers along the way. You can also tune the applicatin if possible, or make sure you're following best practices in terms of enabling accelerated networking on the VM based on VM size. You also want to make sure your disks can handle the amount of IOs you pushing.
 
