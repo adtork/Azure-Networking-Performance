@@ -103,6 +103,10 @@ https://wintelguy.com/wanperf.pl
 • If the application supports parallel threads and operations, use it as that will yeild much better peformance
 
 # Other Useful Links
+• https://infrastructuremap.microsoft.com/explore
+<br>
+• https://learn.microsoft.com/en-us/azure/networking/azure-network-latency
+<br>
 • https://learn.microsoft.com/en-us/azure/virtual-network/virtual-machine-network-throughput
 <br>
 • https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-tcpip-performance-tuning
