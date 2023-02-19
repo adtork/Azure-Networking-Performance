@@ -3,15 +3,15 @@ Networking Performance and Best Practices that goes a little deeper on TCP/IP
 # Intro
 This article is going to discuss Azure networking performance across VPN and ExpressRoute. We will talk about what to expect, best practices, how to troubleshoot and tips. To summarize when talking about networking performance, you're only has fast as your lowest denominator. Taking Express Route as an example, you have the circuit bandwidth all up (Which includes both MSEEs ~VRFs), The gateway bandwidth, and the VMs from which you are running your workloads, sender and receiver. Any of those variables can be the bottleneck if peformance is not optimal. To summarize, the biggest factors that affect network performance are as follows:
 
-1. Your RTT (Round Trip Time) This is the time it takes for a packet to go from sender to receiver and back to the sender, or simply the latency. This variable cannot be changed unless you move one or both closer.
+•  Your RTT (Round Trip Time) This is the time it takes for a packet to go from sender to receiver and back to the sender, or simply latency. This variable cannot be changed unless you move one or both closer.
 
-2. The workload or application. Is the application single or multi-threaded? By that I mean, does it kick off a operation and that TCP stream has to finish before kicking off another operation? If so, that means the receiver has to wait until the data tranfer finishes to recieve more data. In a networking trace (More on that later) it would show only one TCP stream. If your application is multi-threaded, that means it can initiate multiple TCP streams at once to the receiver without having to wait until the operation finsihes.
+•  The workload or application. Is the application single or multi-threaded? By that I mean, does it kick off a operation and that TCP stream has to finish before kicking off another operation? If so, that means the receiver has to wait until the data tranfer finishes to recieve more data. In a networking trace (More on that later) it would show only one TCP stream. If your application is multi-threaded, that means it can initiate multiple TCP streams at once to the receiver without having to wait until the operation finsihes.
 
-3. TCP Window Size, ie scale factor. In the Windows TCP/IP Stack, TCP options include what we call scale factor. The receiver advertises to the sender how much data its allowed to recieve. After Server 2008, Windows TCP stack automatically adjusts the scale factor based on RTT and packet loss. Most mahcines offer a scale factor of x 8 (More on that later)
+•  TCP Window Size, ie window scale factor. In the TCP/IP Stack, TCP options include what we call window scale factor. The receiver advertises to the sender how much data its allowed to recieve during transfer. After Server 2008, Windows TCP stack automatically adjusts the scale factor based on smooth RTT and packet loss. Most mahcines offer a scale factor of x 8 (More on that later).
 
-4. The size of the pipe, ie the bandwidth as we alluded above. Just because you have a 10GB circuit, does not mean you are going to get close to 10GB peformance. This also comes into play with the VMs and Gateways the workloads are running over. 
+•  The size of the data pipe, ie the bandwidth as we alluded above. Just because you have a 10GB circuit, does not mean you are going to get close to 10GB peformance. This also comes into play with the VMs and Gateways the workloads are running over. 
 
-5. Packet loss -Generally in networking we say 1-2% packet loss is acceptable. Anything beyond that is going to have issues because the sender is going to retransmit packets which causes delay
+•  Packet loss -Generally in networking we say 1-2% packet loss is deemed acceptable. Anything beyond that is going to have issues because the sender is going to retransmit packets without ackknowledgements which causes delay in transfer.
 
 Lets step through each of these variables and explain how they affect performance and what's normal and not normal.
 
